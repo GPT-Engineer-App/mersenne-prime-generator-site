@@ -28,8 +28,13 @@ const Index = () => {
     localStorage.setItem("mersennePrimes", JSON.stringify(mersennePrimes));
   }, [mersennePrimes]);
 
+  const stopCalculating = () => setCalculating(false);
+
   const calculateMersennePrimes = (p = 2) => {
-    setCalculating(true);
+    if (!calculating) {
+      setCalculating(true);
+      setProgress(0);
+    }
     setProgress(p);
 
     if (isMersennePrime(p)) {
@@ -43,14 +48,9 @@ const Index = () => {
       });
     }
 
-    // Stop the calculation after checking 100 exponents to prevent a potential stack overflow
-    if (p < 100) {
-      setTimeout(() => {
-        calculateMersennePrimes(p + 1);
-      }, 0);
-    } else {
-      setCalculating(false);
-    }
+    setTimeout(() => {
+      if (calculating) calculateMersennePrimes(p + 1);
+    }, 0);
   };
 
   // Removed the cleanup effect to allow continuous search
@@ -62,8 +62,11 @@ const Index = () => {
           Mersenne Prime Calculator
         </Heading>
         <Text>Connect and calculate Mersenne primes together.</Text>
-        <Button leftIcon={<FaCalculator />} colorScheme="teal" onClick={calculateMersennePrimes} isLoading={calculating} loadingText="Calculating">
+        <Button leftIcon={<FaCalculator />} colorScheme="teal" onClick={() => calculateMersennePrimes(progress)} isLoading={calculating} loadingText="Calculating">
           {calculating ? "Calculating..." : "Start Calculating"}
+        </Button>
+        <Button leftIcon={<FaCalculator />} colorScheme="red" onClick={stopCalculating} isDisabled={!calculating}>
+          Stop Calculating
         </Button>
         <Text>Current exponent being checked: {progress}</Text>
         <Progress value={progress} width="100%" colorScheme="teal" />
