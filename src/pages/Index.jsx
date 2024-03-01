@@ -34,22 +34,35 @@ const Index = () => {
     }
   };
 
-  const calculateMersennePrimes = (p = 2) => {
+  const calculateMersennePrimes = async (p = 2) => {
     if (!calculating) {
       setCalculating(true);
-      setProgress(0);
     }
+
+    if (!isMersennePrime(p)) {
+      if (calculating) {
+        setTimeout(() => {
+          calculateMersennePrimes(p + 1);
+        }, 100);
+      }
+      return;
+    }
+
     setProgress(p);
 
-    if (isMersennePrime(p)) {
-      setMersennePrimes((prevPrimes) => [...prevPrimes, p]);
-      toast({
-        title: `New Mersenne Prime Found!`,
-        description: `Prime: 2^${p} - 1 (Exponent: ${p})`,
-        status: "success",
-        duration: 9000,
-        isClosable: true,
-      });
+    setMersennePrimes((prevPrimes) => [...prevPrimes, p]);
+    toast({
+      title: `New Mersenne Prime Found!`,
+      description: `Prime: 2^${p} - 1 (Exponent: ${p})`,
+      status: "success",
+      duration: 9000,
+      isClosable: true,
+    });
+
+    if (calculating) {
+      setTimeout(() => {
+        calculateMersennePrimes(p + 1);
+      }, 100);
     }
 
     // No change needed here, the existing code already handles automatic incrementation and checking for Mersenne primes correctly.
