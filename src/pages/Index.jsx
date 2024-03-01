@@ -60,8 +60,10 @@ const Index = () => {
         <Button leftIcon={<FaCalculator />} colorScheme="teal" onClick={calculateMersennePrimes} isLoading={calculating} loadingText="Calculating">
           {calculating ? "Calculating..." : "Start Calculating"}
         </Button>
+        <Text>Current exponent being checked: {progress}</Text>
         <Progress value={progress} width="100%" colorScheme="teal" />
         <VStack spacing={2} align="stretch">
+          <Text fontWeight="bold">Found Mersenne Primes Exponents:</Text>
           {mersennePrimes.map((prime, index) => (
             <Box key={index} p={3} shadow="md" borderWidth="1px">
               <Text fontWeight="bold">Exponent: {prime}</Text>
