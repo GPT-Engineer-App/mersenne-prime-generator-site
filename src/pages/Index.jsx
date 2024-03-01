@@ -36,7 +36,7 @@ const Index = () => {
       setMersennePrimes((prevPrimes) => [...prevPrimes, p]);
       toast({
         title: `New Mersenne Prime Found!`,
-        description: `Exponent: ${p}`,
+        description: `Prime: 2^${p} - 1 (Exponent: ${p})`,
         status: "success",
         duration: 9000,
         isClosable: true,
