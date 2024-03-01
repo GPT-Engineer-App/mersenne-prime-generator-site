@@ -28,16 +28,24 @@ const Index = () => {
     localStorage.setItem("mersennePrimes", JSON.stringify(mersennePrimes));
   }, [mersennePrimes]);
 
-  const calculateMersennePrimes = () => {
+  const calculateMersennePrimes = (p = 2) => {
     setCalculating(true);
+    setProgress((prevProgress) => prevProgress + 1);
 
-    for (let p = 2; p < 31; p++) {
-      if (isMersennePrime(p)) {
-        setMersennePrimes((prevPrimes) => [...prevPrimes, p]);
-      }
+    if (isMersennePrime(p)) {
+      setMersennePrimes((prevPrimes) => [...prevPrimes, p]);
     }
-    setCalculating(false);
+
+    setTimeout(() => {
+      if (!calculating) return; // Stop if calculating has been set to false
+      calculateMersennePrimes(p + 1); // Increase exponent and continue calculation
+    }, 0);
   };
+
+  // Clean up on unmount
+  useEffect(() => {
+    return () => setCalculating(false); // This will cause the recursive setTimeout to stop calling itself
+  }, []);
 
   return (
     <Box p={5}>
