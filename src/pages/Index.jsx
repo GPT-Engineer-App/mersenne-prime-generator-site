@@ -67,10 +67,11 @@ const Index = () => {
         <Progress value={progress} width="100%" colorScheme="teal" />
         <VStack spacing={2} align="stretch">
           {mersennePrimes.map((prime, index) => (
-            <Box key={index} p={3} shadow="md" borderWidth="1px">
+            <Box key={index} p={3} shadow="md" borderWidth="1px" display="flex" justifyContent="space-between">
               <Text>
                 2<sup>{prime}</sup> - 1
               </Text>
+              <Text fontWeight="bold">Exponent: {prime}</Text>
             </Box>
           ))}
         </VStack>
