@@ -30,7 +30,7 @@ const Index = () => {
 
   const calculateMersennePrimes = (p = 2) => {
     setCalculating(true);
-    setProgress((prevProgress) => prevProgress + 1);
+    setProgress(p);
 
     if (isMersennePrime(p)) {
       setMersennePrimes((prevPrimes) => [...prevPrimes, p]);
