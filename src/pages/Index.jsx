@@ -44,15 +44,11 @@ const Index = () => {
     }
 
     setTimeout(() => {
-      if (!calculating) return; // Stop if calculating has been set to false
-      calculateMersennePrimes(p + 1); // Increase exponent and continue calculation
+      calculateMersennePrimes(p + 1);
     }, 0);
   };
 
-  // Clean up on unmount
-  useEffect(() => {
-    return () => setCalculating(false); // This will cause the recursive setTimeout to stop calling itself
-  }, []);
+  // Removed the cleanup effect to allow continuous search
 
   return (
     <Box p={5}>
