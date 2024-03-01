@@ -43,9 +43,14 @@ const Index = () => {
       });
     }
 
-    setTimeout(() => {
-      calculateMersennePrimes(p + 1);
-    }, 0);
+    // Stop the calculation after checking 100 exponents to prevent a potential stack overflow
+    if (p < 100) {
+      setTimeout(() => {
+        calculateMersennePrimes(p + 1);
+      }, 0);
+    } else {
+      setCalculating(false);
+    }
   };
 
   // Removed the cleanup effect to allow continuous search
