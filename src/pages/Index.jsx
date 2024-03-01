@@ -34,6 +34,13 @@ const Index = () => {
 
     if (isMersennePrime(p)) {
       setMersennePrimes((prevPrimes) => [...prevPrimes, p]);
+      toast({
+        title: `New Mersenne Prime Found!`,
+        description: `Exponent: ${p}`,
+        status: "success",
+        duration: 9000,
+        isClosable: true,
+      });
     }
 
     setTimeout(() => {
