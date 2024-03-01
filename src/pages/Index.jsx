@@ -43,7 +43,9 @@ const Index = () => {
       });
     }
 
-    requestAnimationFrame(() => calculateMersennePrimes(p + 1));
+    setTimeout(() => {
+      calculateMersennePrimes(p + 1);
+    }, 0);
   };
 
   // Removed the cleanup effect to allow continuous search
