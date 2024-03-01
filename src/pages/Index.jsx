@@ -37,22 +37,23 @@ const Index = () => {
   const calculateMersennePrimes = (p = 2) => {
     if (!calculating) {
       setCalculating(true);
-      setProgress(0);
     }
     setProgress(p);
 
     if (isMersennePrime(p)) {
-      setMersennePrimes((prevPrimes) => [...prevPrimes, p]);
+      setMersennePrimes((prevPrimes) => [...prevPrimes, 2 ** p - 1]);
       toast({
         title: `New Mersenne Prime Found!`,
-        description: `Prime: 2^${p} - 1 (Exponent: ${p})`,
+        description: `Prime: 2^${p} - 1`,
         status: "success",
         duration: 9000,
         isClosable: true,
       });
     }
 
-    // No change needed here, the existing code already handles automatic incrementation and checking for Mersenne primes correctly.
+    if (calculating) {
+      setTimeout(() => calculateMersennePrimes(p + 1), 100);
+    }
   };
 
   // Removed the cleanup effect to allow continuous search
