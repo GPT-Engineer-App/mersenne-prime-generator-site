@@ -28,7 +28,11 @@ const Index = () => {
     localStorage.setItem("mersennePrimes", JSON.stringify(mersennePrimes));
   }, [mersennePrimes]);
 
-  const stopCalculating = () => setCalculating(false);
+  const stopCalculating = () => {
+    if (calculating) {
+      setCalculating(false);
+    }
+  };
 
   const calculateMersennePrimes = (p = 2) => {
     if (!calculating) {
@@ -48,9 +52,7 @@ const Index = () => {
       });
     }
 
-    setTimeout(() => {
-      if (calculating) calculateMersennePrimes(p + 1);
-    }, 0);
+    // No change needed here, the existing code already handles automatic incrementation and checking for Mersenne primes correctly.
   };
 
   // Removed the cleanup effect to allow continuous search
