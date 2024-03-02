@@ -28,10 +28,18 @@ const Index = () => {
     localStorage.setItem("mersennePrimes", JSON.stringify(mersennePrimes));
   }, [mersennePrimes]);
 
-  const stopCalculating = () => {
+  useEffect(() => {
+    let intervalId;
     if (calculating) {
-      setCalculating(false);
+      intervalId = setInterval(() => {
+        calculateMersennePrimes(progress + 1);
+      }, 1000);
     }
+    return () => clearInterval(intervalId);
+  }, [calculating, progress]);
+
+  const stopCalculating = () => {
+    setCalculating(false);
   };
 
   const calculateMersennePrimes = (p = 2) => {
